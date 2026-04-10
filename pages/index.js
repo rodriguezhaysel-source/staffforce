@@ -5,11 +5,11 @@ import {
   LayoutDashboard, Clock, Calendar, ClipboardList, Umbrella, Users,
   UserCheck, MessageSquare, DollarSign, BarChart2, FileText, Bell,
   MapPin, Settings, LogOut, Plus, X, Edit2, Trash2, Check, ChevronDown,
-  ChevronRight, Download, Upload, Eye, Print, Search, Filter, RefreshCw,
+  ChevronRight, Download, Upload, Eye, Search, Filter, RefreshCw,
   AlertTriangle, CheckCircle, XCircle, Info, Send, User, Building,
   Briefcase, ArrowRight, ArrowLeft, MoreVertical, Star, Phone, Mail,
   Lock, Globe, Save, Camera, Copy, ExternalLink, ChevronLeft, ChevronUp,
-  TrendingUp, TrendingDown, Shuffle, CreditCard, Hash, Activity, Zap
+  TrendingUp, TrendingDown, Shuffle, CreditCard, Hash, Activity, Zap, Printer
 } from 'lucide-react'
 import {
   format, parseISO, differenceInMinutes, differenceInDays,
@@ -1719,7 +1719,7 @@ function PayrollView({ user }) {
             <div className="modal-header">
               <span className="modal-title">Pay Stub — {fullName(showPaystub.employee)}</span>
               <div style={{ display: 'flex', gap: 8 }}>
-                <button className="btn btn-secondary btn-sm" onClick={() => window.print()}><Print size={14} /> Print</button>
+                <button className="btn btn-secondary btn-sm" onClick={() => window.print()}><Printer size={14} /> Print</button>
                 <button className="btn btn-ghost btn-sm" onClick={() => setShowPaystub(null)}><X size={16} /></button>
               </div>
             </div>
