@@ -294,6 +294,7 @@ function LoginScreen({
         </div>
 
         {mode === 'admin' ? (
+          <>
           <form onSubmit={handleAdminLogin} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
             <div className="form-group">
               <label className="form-label">{t(lang, 'email')}</label>
@@ -331,6 +332,7 @@ function LoginScreen({
               Forgot password?
             </button>
           )}
+          </>
         ) : (
           <div>
             <div className="pin-display">
