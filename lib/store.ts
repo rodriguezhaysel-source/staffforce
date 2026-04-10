@@ -177,10 +177,11 @@ export interface Document {
   id: string
   employee_id?: string
   name: string
-  type?: DocumentType
+  type: string
+  url?: string
   file_url?: string
   expiry_date?: string
-  status: DocumentStatus
+  status?: string
   notes?: string
   uploaded_by?: string
   created_at: string
