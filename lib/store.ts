@@ -162,6 +162,7 @@ export interface PayrollEntry {
   retirement_401k: number
   other_deductions: number
   net_pay: number
+  status: string
   bank_name?: string
   bank_routing?: string
   bank_account?: string
@@ -229,7 +230,8 @@ export interface AuditLog {
 
 export interface Message {
   id: string
-  sender_id?: string
+  sender_id: string
+  receiver_id: string
   recipient_id?: string
   group_id?: string
   content: string
@@ -273,11 +275,16 @@ export interface JobPosting {
   location_id?: string
   title: string
   department_id?: string
+  employment_type: string
+  location: string
   description?: string
   requirements?: string
+  salary_min?: number
+  salary_max?: number
   hourly_rate_min?: number
   hourly_rate_max?: number
-  status: JobPostingStatus
+  status: string
+  created_by?: string
   created_at: string
   // joined
   department?: Department
