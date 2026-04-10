@@ -138,6 +138,7 @@ export interface PayrollPeriod {
   location_id?: string
   start_date: string
   end_date: string
+  pay_date: string
   frequency: PayrollFrequency
   status: PayrollStatus
   paid_at?: string
