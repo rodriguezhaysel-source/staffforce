@@ -1463,8 +1463,10 @@ function TimeOffModule({ user, lang, addToast }: { user: Employee; lang: Lang; a
     // Deduct PTO if approved vacation/sick/personal
     if (action === 'approved' && req && req.type !== 'unpaid' && req.employee_id) {
       const days = req.days || 0
-      await supabase.rpc('decrement_pto', { emp_id: req.employee_id, days_used: days })
-        .catch(() => supabase.from('employees').update({ pto_balance: Math.max(0, (req.employee?.pto_balance || 0) - days) }).eq('id', req.employee_id))
+      const { error: rpcErr } = await supabase.rpc('decrement_pto', { emp_id: req.employee_id, days_used: days })
+      if (rpcErr) {
+        await supabase.from('employees').update({ pto_balance: Math.max(0, (req.employee?.pto_balance || 0) - days) }).eq('id', req.employee_id)
+      }
     }
 
     // Notification
