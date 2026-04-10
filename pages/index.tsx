@@ -3390,7 +3390,7 @@ function HiringModule({ user, lang, addToast }: { user: Employee; lang: Lang; ad
                   return (
                     <tr key={job.id}>
                       <td style={{ fontWeight: 500 }}>{job.title}</td>
-                      <td>{(job as Record<string, unknown>).department ? <span className="badge badge-violet">{((job as Record<string, unknown>).department as { name: string }).name}</span> : '—'}</td>
+                      <td>{(job as unknown as unknown as Record<string, unknown>).department ? <span className="badge badge-violet">{((job as unknown as unknown as Record<string, unknown>).department as { name: string }).name}</span> : '—'}</td>
                       <td className="td-muted">{job.employment_type}</td>
                       <td className="td-muted">{job.location || '—'}</td>
                       <td>
