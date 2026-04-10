@@ -441,7 +441,7 @@ function DashboardModule({ user, lang }: { user: Employee; lang: Lang }) {
       .not('clock_out', 'is', null)
 
     const laborCostMTD = (monthEntries || []).reduce((sum, e: Record<string, unknown>) => {
-      const emp = e.employee as Employee
+      const emp = e.employee as unknown as Employee
       if (!emp || !e.clock_out) return sum
       if (emp.employment_type === 'salary') return sum + emp.salary_annual / 24
       const h = Math.max(0, (differenceInMinutes(parseISO(e.clock_out as string), parseISO(e.clock_in as string)) - ((e.break_mins as number)||0)) / 60)
@@ -518,7 +518,7 @@ function DashboardModule({ user, lang }: { user: Employee; lang: Lang }) {
       .limit(5)
 
     const docAlerts = (expiringDocs || []).map((d: Record<string,unknown>) => {
-      const emp = d.employee as Employee
+      const emp = d.employee as unknown as Employee
       return { type: 'warning', msg: `${d.name} for ${emp?.first_name} expires ${d.expiry_date}` }
     })
 
@@ -2850,7 +2850,7 @@ function ReportsModule({ user, lang }: { user: Employee; lang: Lang }) {
 
       const grouped: Record<string, { name: string; dept: string; hours: number; entries: number }> = {}
       for (const e of entries || []) {
-        const emp = e.employee as Employee & { department: { name: string } }
+        const emp = e.employee as unknown as Employee & { department: { name: string } }
         if (!grouped[e.employee_id!]) grouped[e.employee_id!] = { name: emp ? fullName(emp) : '?', dept: emp?.department?.name || '—', hours: 0, entries: 0 }
         const h = Math.max(0, (differenceInMinutes(parseISO(e.clock_out!), parseISO(e.clock_in)) - (e.break_mins || 0)) / 60)
         grouped[e.employee_id!].hours += h
@@ -2866,7 +2866,7 @@ function ReportsModule({ user, lang }: { user: Employee; lang: Lang }) {
 
       const grouped: Record<string, { name: string; dept: string; hours: number; cost: number }> = {}
       for (const e of entries || []) {
-        const emp = e.employee as Employee & { department: { name: string } }
+        const emp = e.employee as unknown as Employee & { department: { name: string } }
         if (!grouped[e.employee_id!]) grouped[e.employee_id!] = { name: emp ? fullName(emp) : '?', dept: emp?.department?.name || '—', hours: 0, cost: 0 }
         const h = Math.max(0, (differenceInMinutes(parseISO(e.clock_out!), parseISO(e.clock_in)) - (e.break_mins || 0)) / 60)
         grouped[e.employee_id!].hours += h
@@ -2887,7 +2887,7 @@ function ReportsModule({ user, lang }: { user: Employee; lang: Lang }) {
       const grouped: Record<string, { name: string; scheduled: number; present: number; absent: number }> = {}
 
       for (const s of shifts || []) {
-        const emp = s.employee as Employee
+        const emp = s.employee as unknown as Employee
         if (!grouped[s.employee_id!]) grouped[s.employee_id!] = { name: emp ? fullName(emp) : '?', scheduled: 0, present: 0, absent: 0 }
         grouped[s.employee_id!].scheduled += 1
         const key = `${s.employee_id}_${s.start_time.slice(0, 10)}`
