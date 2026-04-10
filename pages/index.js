@@ -91,20 +91,30 @@ function Login({ onLogin }) {
   async function handleLogin(e) {
     e.preventDefault()
     setLoading(true)
-    setError('')
-    const { data, error: err } = await supabase
-      .from('employees')
-      .select('*')
-      .eq('email', email.trim().toLowerCase())
-      .eq('password_hash', password.trim())
-      .eq('status', 'active')
-      .single()
-    setLoading(false)
-    if (err || !data) {
-      setError('Invalid email or password. Make sure your account is active.')
-      return
+    setError("")
+    try {
+      const { data, error: err } = await supabase
+        .from("employees")
+        .select("*")
+        .eq("email", email.trim().toLowerCase())
+        .eq("status", "active")
+      if (err) {
+        setError("Database error: " + err.message)
+        setLoading(false)
+        return
+      }
+      const match = (data || []).find(emp => emp.password_hash === password.trim())
+      if (!match) {
+        setError("Invalid email or password.")
+        setLoading(false)
+        return
+      }
+      setLoading(false)
+      onLogin(match)
+    } catch (ex) {
+      setError("Unexpected error: " + ex.message)
+      setLoading(false)
     }
-    onLogin(data)
   }
 
   async function handleRecovery(e) {
