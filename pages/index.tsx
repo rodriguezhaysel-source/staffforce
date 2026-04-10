@@ -2773,7 +2773,7 @@ function PaystubModal({ entry, period, companyName, lang, onClose }: { entry: Pa
       <div className="modal-header">
         <h2 className="modal-title">{t(lang, 'earningsStatement')}</h2>
         <div className="flex gap-8">
-          <button className="btn btn-secondary btn-sm" onClick={() => window.print()}><Icon.Print />{t(lang, 'print')}</button>
+          <button className="btn btn-secondary btn-sm" onClick={() => window.print()}><Icon.Print />{'Print'}</button>
           <button className="btn-ghost btn-icon" onClick={onClose}><Icon.X /></button>
         </div>
       </div>
