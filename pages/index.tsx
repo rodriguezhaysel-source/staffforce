@@ -949,7 +949,7 @@ function ClockModule({ user, lang, addToast }: { user: Employee; lang: Lang; add
             {user.first_name} {user.last_name}
           </div>
           <div className="clock-time-display">
-            {activeEntry ? elapsed || '0h 0m' : ''--''}
+            {activeEntry ? elapsed || '0h 0m' : '-'}
           </div>
           <div style={{ fontSize: 14, color: activeEntry ? 'var(--success)' : 'var(--text3)', marginBottom: 24, fontWeight: 500 }}>
             {activeEntry ? `${t(lang, 'currentlyWorking')} . Since ${fmtTime(activeEntry.clock_in)}` : t(lang, 'notClockedIn')}
@@ -1378,7 +1378,7 @@ function TimesheetsModule({ user, lang, addToast }: { user: Employee; lang: Lang
                       <td>
                         <div className="flex items-center gap-8">
                           {entry.employee && <div className="avatar avatar-sm">{initials(entry.employee)}</div>}
-                          <span style={{ fontSize: 13 }}>{entry.employee ? fullName(entry.employee) : ''--''}</span>
+                          <span style={{ fontSize: 13 }}>{entry.employee ? fullName(entry.employee) : '-'}</span>
                         </div>
                       </td>
                       <td className="td-muted">{format(parseISO(entry.clock_in), 'MMM d, yyyy')}</td>
@@ -1388,7 +1388,7 @@ function TimesheetsModule({ user, lang, addToast }: { user: Employee; lang: Lang
                         {hours.toFixed(2)}h {isOT && <span className="badge badge-warning" style={{ fontSize: 9 }}>OT</span>}
                       </td>
                       <td className="td-muted">{entry.break_mins}m</td>
-                      <td>{isOT ? <span style={{ color: 'var(--warning)', fontWeight: 600 }}>Yes</span> : <span className="td-muted">'--'</span>}</td>
+                      <td>{isOT ? <span style={{ color: 'var(--warning)', fontWeight: 600 }}>Yes</span> : <span className="td-muted">"--"</span>}</td>
                       <td>
                         <span className={`badge badge-${entry.status === 'approved' ? 'success' : entry.status === 'rejected' ? 'danger' : 'warning'}`}>
                           {t(lang, entry.status as Parameters<typeof t>[1])}
@@ -1604,15 +1604,15 @@ function TimeOffModule({ user, lang, addToast }: { user: Employee; lang: Lang; a
                       <td>
                         <div className="flex items-center gap-8">
                           {req.employee && <div className="avatar avatar-sm">{initials(req.employee)}</div>}
-                          <span>{req.employee ? fullName(req.employee) : ''--''}</span>
+                          <span>{req.employee ? fullName(req.employee) : '-'}</span>
                         </div>
                       </td>
                     )}
                     <td><span className="badge badge-info">{req.type}</span></td>
                     <td>{req.start_date}</td>
                     <td>{req.end_date}</td>
-                    <td>{req.days || ''--''}</td>
-                    <td className="td-muted" style={{ maxWidth: 200 }}><span className="truncate">{req.reason || ''--''}</span></td>
+                    <td>{req.days || '-'}</td>
+                    <td className="td-muted" style={{ maxWidth: 200 }}><span className="truncate">{req.reason || '-'}</span></td>
                     <td>
                       <span className={`badge badge-${req.status === 'approved' ? 'success' : req.status === 'denied' ? 'danger' : 'warning'}`}>
                         {req.status}
@@ -1871,10 +1871,10 @@ function ShiftSwapModule({ user, lang, addToast }: { user: Employee; lang: Lang;
                 <tbody>
                   {swaps.map(swap => (
                     <tr key={swap.id}>
-                      <td>{swap.requester ? fullName(swap.requester) : ''--''}</td>
-                      <td className="td-muted">{swap.shift ? `${fmtDate(swap.shift.start_time)} ${fmtTime(swap.shift.start_time)}` : ''--''}</td>
-                      <td>{swap.target ? fullName(swap.target) : ''--''}</td>
-                      <td className="td-muted">{swap.target_shift ? `${fmtDate(swap.target_shift.start_time)} ${fmtTime(swap.target_shift.start_time)}` : ''--''}</td>
+                      <td>{swap.requester ? fullName(swap.requester) : '-'}</td>
+                      <td className="td-muted">{swap.shift ? `${fmtDate(swap.shift.start_time)} ${fmtTime(swap.shift.start_time)}` : '-'}</td>
+                      <td>{swap.target ? fullName(swap.target) : '-'}</td>
+                      <td className="td-muted">{swap.target_shift ? `${fmtDate(swap.target_shift.start_time)} ${fmtTime(swap.target_shift.start_time)}` : '-'}</td>
                       <td><span className={`badge badge-${swap.status === 'approved' ? 'success' : swap.status === 'denied' ? 'danger' : 'warning'}`}>{swap.status}</span></td>
                       <td>
                         {swap.status === 'pending' && (user.role === 'admin' || user.role === 'manager' || swap.target_id === user.id) && (
@@ -2062,7 +2062,7 @@ function EmployeesModule({ user, lang, addToast }: { user: Employee; lang: Lang;
                         </div>
                       </div>
                     </td>
-                    <td className="td-muted">{emp.position || ''--''}</td>
+                    <td className="td-muted">{emp.position || '-'}</td>
                     <td>
                       {emp.department && (
                         <span className="badge" style={{ background: emp.department.color + '22', color: emp.department.color }}>{emp.department.name}</span>
@@ -2072,7 +2072,7 @@ function EmployeesModule({ user, lang, addToast }: { user: Employee; lang: Lang;
                     <td style={{ fontWeight: 500 }}>
                       {emp.employment_type === 'hourly' ? `$${emp.hourly_rate}/hr` : `$${emp.salary_annual.toLocaleString()}/yr`}
                     </td>
-                    <td className="td-muted">{emp.hire_date ? fmtDate(emp.hire_date) : ''--''}</td>
+                    <td className="td-muted">{emp.hire_date ? fmtDate(emp.hire_date) : '-'}</td>
                     <td>
                       <span className={`badge badge-${emp.status === 'active' ? 'success' : emp.status === 'terminated' ? 'danger' : 'warning'}`}>
                         {emp.status}
@@ -2320,7 +2320,7 @@ function EmployeeModal({ employee, departments, locations, lang, user, onClose, 
             </div>
             <label className="checkbox-row">
               <input type="checkbox" checked={form.geo_exempt} onChange={e => setForm(p => ({ ...p, geo_exempt: e.target.checked }))} />
-              <span>{t(lang, 'geoExemptLabel')} '--' bypass geofencing for remote employees</span>
+              <span>{t(lang, 'geoExemptLabel')} "--" bypass geofencing for remote employees</span>
             </label>
           </>
         )}
@@ -2723,7 +2723,7 @@ function PayrollModule({ user, lang, addToast }: { user: Employee; lang: Lang; a
                               <div className="flex items-center gap-8">
                                 {entry.employee && <div className="avatar avatar-sm">{initials(entry.employee)}</div>}
                                 <div>
-                                  <div style={{ fontWeight: 500, fontSize: 13 }}>{entry.employee ? fullName(entry.employee) : ''--''}</div>
+                                  <div style={{ fontWeight: 500, fontSize: 13 }}>{entry.employee ? fullName(entry.employee) : '-'}</div>
                                   <div className="text-xs text-muted2">{entry.employee?.position}</div>
                                 </div>
                               </div>
@@ -2848,8 +2848,8 @@ function PaystubModal({ entry, period, companyName, lang, onClose }: { entry: Pa
           <div className="paystub-section">
             <div className="paystub-section-title">Employee</div>
             <div className="paystub-row"><span>{t(lang, 'employeeId')}</span><span>{entry.employee_id?.slice(0, 8).toUpperCase()}</span></div>
-            <div className="paystub-row"><span>Name</span><span>{entry.employee ? fullName(entry.employee) : ''--''}</span></div>
-            <div className="paystub-row"><span>Position</span><span>{entry.employee?.position || ''--''}</span></div>
+            <div className="paystub-row"><span>Name</span><span>{entry.employee ? fullName(entry.employee) : '-'}</span></div>
+            <div className="paystub-row"><span>Position</span><span>{entry.employee?.position || '-'}</span></div>
           </div>
 
           <div className="paystub-section">
@@ -2905,7 +2905,7 @@ function ReportsModule({ user, lang }: { user: Employee; lang: Lang }) {
       const grouped: Record<string, { name: string; dept: string; hours: number; entries: number }> = {}
       for (const e of entries || []) {
         const emp = e.employee as unknown as Employee & { department: { name: string } }
-        if (!grouped[e.employee_id!]) grouped[e.employee_id!] = { name: emp ? fullName(emp) : '?', dept: emp?.department?.name || ''--'', hours: 0, entries: 0 }
+        if (!grouped[e.employee_id!]) grouped[e.employee_id!] = { name: emp ? fullName(emp) : '?', dept: emp?.department?.name || '-', hours: 0, entries: 0 }
         const h = Math.max(0, (differenceInMinutes(parseISO(e.clock_out!), parseISO(e.clock_in)) - (e.break_mins || 0)) / 60)
         grouped[e.employee_id!].hours += h
         grouped[e.employee_id!].entries += 1
@@ -2921,7 +2921,7 @@ function ReportsModule({ user, lang }: { user: Employee; lang: Lang }) {
       const grouped: Record<string, { name: string; dept: string; hours: number; cost: number }> = {}
       for (const e of entries || []) {
         const emp = e.employee as unknown as Employee & { department: { name: string } }
-        if (!grouped[e.employee_id!]) grouped[e.employee_id!] = { name: emp ? fullName(emp) : '?', dept: emp?.department?.name || ''--'', hours: 0, cost: 0 }
+        if (!grouped[e.employee_id!]) grouped[e.employee_id!] = { name: emp ? fullName(emp) : '?', dept: emp?.department?.name || '-', hours: 0, cost: 0 }
         const h = Math.max(0, (differenceInMinutes(parseISO(e.clock_out!), parseISO(e.clock_in)) - (e.break_mins || 0)) / 60)
         grouped[e.employee_id!].hours += h
         grouped[e.employee_id!].cost += emp?.employment_type === 'hourly' ? h * (emp?.hourly_rate || 0) : (emp?.salary_annual || 0) / 26
@@ -3171,9 +3171,9 @@ function DocumentsModule({ user, lang, addToast }: { user: Employee; lang: Lang;
                         <span style={{ fontWeight: 500 }}>{doc.name}</span>
                       </div>
                     </td>
-                    {user.role !== 'employee' && <td>{doc.employee ? fullName(doc.employee) : ''--''}</td>}
+                    {user.role !== 'employee' && <td>{doc.employee ? fullName(doc.employee) : '-'}</td>}
                     <td><span className="badge badge-muted">{doc.type}</span></td>
-                    <td>{doc.expiry_date ? fmtDate(doc.expiry_date) : <span className="td-muted">'--'</span>}</td>
+                    <td>{doc.expiry_date ? fmtDate(doc.expiry_date) : <span className="td-muted">"--"</span>}</td>
                     <td>{getExpirybadge(doc.expiry_date)}</td>
                     <td>
                       {doc.url && (
@@ -3444,9 +3444,9 @@ function HiringModule({ user, lang, addToast }: { user: Employee; lang: Lang; ad
                   return (
                     <tr key={job.id}>
                       <td style={{ fontWeight: 500 }}>{job.title}</td>
-                      <td>{(job as unknown as unknown as Record<string, unknown>).department ? <span className="badge badge-violet">{((job as unknown as unknown as Record<string, unknown>).department as { name: string }).name}</span> : ''--''}</td>
+                      <td>{(job as unknown as unknown as Record<string, unknown>).department ? <span className="badge badge-violet">{((job as unknown as unknown as Record<string, unknown>).department as { name: string }).name}</span> : '-'}</td>
                       <td className="td-muted">{job.employment_type}</td>
-                      <td className="td-muted">{job.location || ''--''}</td>
+                      <td className="td-muted">{job.location || '-'}</td>
                       <td>
                         <span className="badge badge-info">{cCount} candidates</span>
                       </td>
@@ -4269,7 +4269,7 @@ function SettingsModule({ user, lang, addToast, onThemeChange }: { user: Employe
                             <span style={{ fontWeight: 500 }}>{fullName(emp)}</span>
                           </div>
                         </td>
-                        <td className="td-muted">{emp.email || ''--''}</td>
+                        <td className="td-muted">{emp.email || '-'}</td>
                         <td><span className={`badge badge-${emp.role === 'admin' ? 'violet' : emp.role === 'manager' ? 'info' : 'muted'}`}>{emp.role}</span></td>
                         <td><span className="badge badge-success">{emp.status}</span></td>
                       </tr>
@@ -4419,7 +4419,7 @@ export default function StaffForce() {
     return (
       <>
         <Head>
-          <title>StaffForce '--' Workforce Management</title>
+          <title>StaffForce "--" Workforce Management</title>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
         </Head>
         <LoginScreen onLogin={handleLogin} lang={lang} setLang={handleSetLang} />
@@ -4461,7 +4461,7 @@ export default function StaffForce() {
   return (
     <>
       <Head>
-        <title>StaffForce '--' Workforce Management</title>
+        <title>StaffForce "--" Workforce Management</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content="Complete workforce management platform" />
       </Head>
