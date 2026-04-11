@@ -19,7 +19,7 @@ import {
   addWeeks, subWeeks, formatDistanceToNow
 } from 'date-fns'
 
-// ─── SVG Icons ────────────────────────────────────────────────────────────────
+// --- SVG Icons ----------------------------------------------------------------
 
 const Icon = {
   Dashboard: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>,
@@ -57,7 +57,7 @@ const Icon = {
   Info: () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>,
 }
 
-// ─── Toast System ─────────────────────────────────────────────────────────────
+// --- Toast System -------------------------------------------------------------
 
 interface Toast { id: string; type: 'success' | 'error' | 'info' | 'warning'; message: string }
 
@@ -86,7 +86,7 @@ function ToastContainer({ toasts }: { toasts: Toast[] }) {
   )
 }
 
-// ─── Modal Wrapper ────────────────────────────────────────────────────────────
+// --- Modal Wrapper ------------------------------------------------------------
 
 function Modal({ children, onClose, size = 'md' }: {
   children: React.ReactNode
@@ -106,7 +106,7 @@ function Modal({ children, onClose, size = 'md' }: {
   )
 }
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
+// --- Helpers ------------------------------------------------------------------
 
 function initials(emp: Employee) {
   return `${emp.first_name[0] ?? ''}${emp.last_name[0] ?? ''}`.toUpperCase()
@@ -174,7 +174,7 @@ function downloadFile(content: string, filename: string, mimeType = 'text/plain'
   URL.revokeObjectURL(url)
 }
 
-// ─── Login Component ──────────────────────────────────────────────────────────
+// --- Login Component ----------------------------------------------------------
 
 function LoginScreen({
   onLogin, lang, setLang
@@ -208,7 +208,7 @@ function LoginScreen({
       const { data: empList2 } = await supabase.from('employees').select('id').eq('email', cleanRecEmail).eq('status', 'active')
       if (!empList2 || empList2.length === 0) { setRecoveryMsg('No active account found with that email.'); setRecoveryLoading(false); return }
       await supabase.from('employees').update({ password_hash: cleanRecPass }).eq('email', cleanRecEmail)
-      setRecoveryMsg('✓ Password updated. You can now sign in.')
+      setRecoveryMsg('v Password updated. You can now sign in.')
       setRecoveryPass('')
       setRecoveryPass2('')
     } catch {
@@ -321,7 +321,7 @@ function LoginScreen({
                 <input className="form-input" type="email" placeholder="Your email" value={recoveryEmail} onChange={e => setRecoveryEmail(e.target.value)} />
                 <input className="form-input" type="password" placeholder="New password" value={recoveryPass} onChange={e => setRecoveryPass(e.target.value)} />
                 <input className="form-input" type="password" placeholder="Confirm new password" value={recoveryPass2} onChange={e => setRecoveryPass2(e.target.value)} />
-                {recoveryMsg && <div className={recoveryMsg.startsWith('✓') ? 'success-box' : 'error-box'} style={{ fontSize: 12 }}>{recoveryMsg}</div>}
+                {recoveryMsg && <div className={recoveryMsg.startsWith('v') ? 'success-box' : 'error-box'} style={{ fontSize: 12 }}>{recoveryMsg}</div>}
                 <div style={{ display: 'flex', gap: 8 }}>
                   <button className="btn btn-secondary w-full" onClick={() => { setShowRecovery(false); setRecoveryMsg('') }}>Cancel</button>
                   <button className="btn btn-primary w-full" onClick={handleRecovery} disabled={recoveryLoading}>
@@ -347,7 +347,7 @@ function LoginScreen({
             <div className="pin-grid">
               {['1','2','3','4','5','6','7','8','9','','0','del'].map(k => (
                 <button key={k} className="pin-key" onClick={() => k && handlePinKey(k)} disabled={loading || !k} style={!k ? { background: 'transparent', border: 'none', cursor: 'default' } : {}}>
-                  {k === 'del' ? '⌫' : k}
+                  {k === 'del' ? '<-' : k}
                 </button>
               ))}
             </div>
@@ -360,7 +360,7 @@ function LoginScreen({
   )
 }
 
-// ─── Sidebar Component ────────────────────────────────────────────────────────
+// --- Sidebar Component --------------------------------------------------------
 
 const NAV_ITEMS: { page: Page; labelKey: string; icon: keyof typeof Icon; roles: string[]; section: string }[] = [
   { page: 'dashboard', labelKey: 'dashboard', icon: 'Dashboard', roles: ['admin','manager','employee'], section: 'workforce' },
@@ -442,7 +442,7 @@ function Sidebar({ user, activePage, setActivePage, lang, unreadCount, onLogout 
   )
 }
 
-// ─── Dashboard Module ─────────────────────────────────────────────────────────
+// --- Dashboard Module ---------------------------------------------------------
 
 function DashboardModule({ user, lang }: { user: Employee; lang: Lang }) {
   const [stats, setStats] = useState({
@@ -667,7 +667,7 @@ function DashboardModule({ user, lang }: { user: Employee; lang: Lang }) {
           </div>
           {activeEntries.length === 0 ? (
             <div className="empty-state">
-              <div className="empty-state-icon">🏢</div>
+              <div className="empty-state-icon"></div>
               <div className="empty-state-text">{t(lang, 'noActiveEmployees')}</div>
             </div>
           ) : (
@@ -700,7 +700,7 @@ function DashboardModule({ user, lang }: { user: Employee; lang: Lang }) {
           </div>
           {upcomingShifts.length === 0 ? (
             <div className="empty-state">
-              <div className="empty-state-icon">📅</div>
+              <div className="empty-state-icon"></div>
               <div className="empty-state-text">{t(lang, 'noUpcomingShifts')}</div>
             </div>
           ) : (
@@ -710,7 +710,7 @@ function DashboardModule({ user, lang }: { user: Employee; lang: Lang }) {
                   <div className="avatar avatar-sm">{shift.employee ? initials(shift.employee) : '?'}</div>
                   <div style={{ flex: 1 }}>
                     <div style={{ fontSize: 13, fontWeight: 500 }}>{shift.employee ? fullName(shift.employee) : 'Unknown'}</div>
-                    <div className="text-xs text-muted2">{fmtTime(shift.start_time)} – {fmtTime(shift.end_time)}</div>
+                    <div className="text-xs text-muted2">{fmtTime(shift.start_time)} - {fmtTime(shift.end_time)}</div>
                   </div>
                   {shift.department && (
                     <span className="badge" style={{ background: shift.department.color + '22', color: shift.department.color, fontSize: 10 }}>
@@ -731,7 +731,7 @@ function DashboardModule({ user, lang }: { user: Employee; lang: Lang }) {
           </div>
           {pendingEntries.length === 0 && pendingTOff.length === 0 ? (
             <div className="empty-state">
-              <div className="empty-state-icon">✅</div>
+              <div className="empty-state-icon"></div>
               <div className="empty-state-text">{t(lang, 'noPendingApprovals')}</div>
             </div>
           ) : (
@@ -741,7 +741,7 @@ function DashboardModule({ user, lang }: { user: Employee; lang: Lang }) {
                   <div className="avatar avatar-sm">{initials(entry.employee)}</div>
                   <div style={{ flex: 1 }}>
                     <div style={{ fontSize: 13, fontWeight: 500 }}>{fullName(entry.employee)}</div>
-                    <div className="text-xs text-muted2">Timesheet · {fmtDate(entry.clock_in)}</div>
+                    <div className="text-xs text-muted2">Timesheet . {fmtDate(entry.clock_in)}</div>
                   </div>
                   <span className="badge badge-warning">Timesheet</span>
                 </div>
@@ -751,7 +751,7 @@ function DashboardModule({ user, lang }: { user: Employee; lang: Lang }) {
                   <div className="avatar avatar-sm">{req.employee ? initials(req.employee) : '?'}</div>
                   <div style={{ flex: 1 }}>
                     <div style={{ fontSize: 13, fontWeight: 500 }}>{req.employee ? fullName(req.employee) : 'Unknown'}</div>
-                    <div className="text-xs text-muted2">Time Off · {req.start_date} to {req.end_date}</div>
+                    <div className="text-xs text-muted2">Time Off . {req.start_date} to {req.end_date}</div>
                   </div>
                   <span className="badge badge-info">Time Off</span>
                 </div>
@@ -767,7 +767,7 @@ function DashboardModule({ user, lang }: { user: Employee; lang: Lang }) {
           </div>
           {alerts.length === 0 ? (
             <div className="empty-state">
-              <div className="empty-state-icon">🎉</div>
+              <div className="empty-state-icon"></div>
               <div className="empty-state-text">No alerts at this time</div>
             </div>
           ) : (
@@ -787,7 +787,7 @@ function DashboardModule({ user, lang }: { user: Employee; lang: Lang }) {
 }
 
 
-// ─── Clock In/Out Module ──────────────────────────────────────────────────────
+// --- Clock In/Out Module ------------------------------------------------------
 
 function ClockModule({ user, lang, addToast }: { user: Employee; lang: Lang; addToast: (type: Toast['type'], msg: string) => void }) {
   const [geoStatus, setGeoStatus] = useState<'checking' | 'ok' | 'denied' | 'outside' | 'exempt'>('checking')
@@ -949,10 +949,10 @@ function ClockModule({ user, lang, addToast }: { user: Employee; lang: Lang; add
             {user.first_name} {user.last_name}
           </div>
           <div className="clock-time-display">
-            {activeEntry ? elapsed || '0h 0m' : '—'}
+            {activeEntry ? elapsed || '0h 0m' : ''--''}
           </div>
           <div style={{ fontSize: 14, color: activeEntry ? 'var(--success)' : 'var(--text3)', marginBottom: 24, fontWeight: 500 }}>
-            {activeEntry ? `${t(lang, 'currentlyWorking')} · Since ${fmtTime(activeEntry.clock_in)}` : t(lang, 'notClockedIn')}
+            {activeEntry ? `${t(lang, 'currentlyWorking')} . Since ${fmtTime(activeEntry.clock_in)}` : t(lang, 'notClockedIn')}
           </div>
 
           <button
@@ -987,7 +987,7 @@ function ClockModule({ user, lang, addToast }: { user: Employee; lang: Lang; add
                   <div>
                     <div style={{ fontSize: 13 }}>
                       <span style={{ color: 'var(--success)' }}>{t(lang, 'clockedInAt')}</span> {fmtTime(entry.clock_in)}
-                      {entry.clock_out && <> · <span style={{ color: 'var(--danger)' }}>{t(lang, 'clockedOutAt')}</span> {fmtTime(entry.clock_out)}</>}
+                      {entry.clock_out && <> . <span style={{ color: 'var(--danger)' }}>{t(lang, 'clockedOutAt')}</span> {fmtTime(entry.clock_out)}</>}
                     </div>
                     {entry.break_mins > 0 && <div className="text-xs text-muted2">Break: {entry.break_mins}min</div>}
                   </div>
@@ -1004,7 +1004,7 @@ function ClockModule({ user, lang, addToast }: { user: Employee; lang: Lang; add
   )
 }
 
-// ─── Schedule Module ──────────────────────────────────────────────────────────
+// --- Schedule Module ----------------------------------------------------------
 
 function ScheduleModule({ user, lang, addToast }: { user: Employee; lang: Lang; addToast: (type: Toast['type'], msg: string) => void }) {
   const [weekStart, setWeekStart] = useState(startOfWeek(new Date(), { weekStartsOn: 0 }))
@@ -1057,7 +1057,7 @@ function ScheduleModule({ user, lang, addToast }: { user: Employee; lang: Lang; 
             <Icon.ChevronLeft />
           </button>
           <span style={{ fontSize: 13, fontWeight: 500, whiteSpace: 'nowrap' }}>
-            {format(weekStart, 'MMM d')} – {format(weekEnd, 'MMM d, yyyy')}
+            {format(weekStart, 'MMM d')} - {format(weekEnd, 'MMM d, yyyy')}
           </span>
           <button className="btn btn-secondary" onClick={() => setWeekStart(w => addWeeks(w, 1))}>
             <Icon.ChevronRight />
@@ -1247,7 +1247,7 @@ function ShiftModal({ shift, employees, departments, lang, onClose, onSave, onDe
   )
 }
 
-// ─── Timesheets Module ─────────────────────────────────────────────────────────
+// --- Timesheets Module ---------------------------------------------------------
 
 function TimesheetsModule({ user, lang, addToast }: { user: Employee; lang: Lang; addToast: (type: Toast['type'], msg: string) => void }) {
   const [entries, setEntries] = useState<(TimeEntry & { employee: Employee })[]>([])
@@ -1378,7 +1378,7 @@ function TimesheetsModule({ user, lang, addToast }: { user: Employee; lang: Lang
                       <td>
                         <div className="flex items-center gap-8">
                           {entry.employee && <div className="avatar avatar-sm">{initials(entry.employee)}</div>}
-                          <span style={{ fontSize: 13 }}>{entry.employee ? fullName(entry.employee) : '—'}</span>
+                          <span style={{ fontSize: 13 }}>{entry.employee ? fullName(entry.employee) : ''--''}</span>
                         </div>
                       </td>
                       <td className="td-muted">{format(parseISO(entry.clock_in), 'MMM d, yyyy')}</td>
@@ -1388,7 +1388,7 @@ function TimesheetsModule({ user, lang, addToast }: { user: Employee; lang: Lang
                         {hours.toFixed(2)}h {isOT && <span className="badge badge-warning" style={{ fontSize: 9 }}>OT</span>}
                       </td>
                       <td className="td-muted">{entry.break_mins}m</td>
-                      <td>{isOT ? <span style={{ color: 'var(--warning)', fontWeight: 600 }}>Yes</span> : <span className="td-muted">—</span>}</td>
+                      <td>{isOT ? <span style={{ color: 'var(--warning)', fontWeight: 600 }}>Yes</span> : <span className="td-muted">'--'</span>}</td>
                       <td>
                         <span className={`badge badge-${entry.status === 'approved' ? 'success' : entry.status === 'rejected' ? 'danger' : 'warning'}`}>
                           {t(lang, entry.status as Parameters<typeof t>[1])}
@@ -1481,7 +1481,7 @@ function EditTimeEntryModal({ entry, lang, onClose, onSave, addToast }: {
   )
 }
 
-// ─── Time Off Module ──────────────────────────────────────────────────────────
+// --- Time Off Module ----------------------------------------------------------
 
 function TimeOffModule({ user, lang, addToast }: { user: Employee; lang: Lang; addToast: (type: Toast['type'], msg: string) => void }) {
   const [requests, setRequests] = useState<(TimeOff & { employee: Employee })[]>([])
@@ -1604,15 +1604,15 @@ function TimeOffModule({ user, lang, addToast }: { user: Employee; lang: Lang; a
                       <td>
                         <div className="flex items-center gap-8">
                           {req.employee && <div className="avatar avatar-sm">{initials(req.employee)}</div>}
-                          <span>{req.employee ? fullName(req.employee) : '—'}</span>
+                          <span>{req.employee ? fullName(req.employee) : ''--''}</span>
                         </div>
                       </td>
                     )}
                     <td><span className="badge badge-info">{req.type}</span></td>
                     <td>{req.start_date}</td>
                     <td>{req.end_date}</td>
-                    <td>{req.days || '—'}</td>
-                    <td className="td-muted" style={{ maxWidth: 200 }}><span className="truncate">{req.reason || '—'}</span></td>
+                    <td>{req.days || ''--''}</td>
+                    <td className="td-muted" style={{ maxWidth: 200 }}><span className="truncate">{req.reason || ''--''}</span></td>
                     <td>
                       <span className={`badge badge-${req.status === 'approved' ? 'success' : req.status === 'denied' ? 'danger' : 'warning'}`}>
                         {req.status}
@@ -1714,7 +1714,7 @@ function RequestTimeOffModal({ user, lang, onClose, onSave, addToast }: {
   )
 }
 
-// ─── Availability Module ───────────────────────────────────────────────────────
+// --- Availability Module -------------------------------------------------------
 
 function AvailabilityModule({ user, lang, addToast }: { user: Employee; lang: Lang; addToast: (type: Toast['type'], msg: string) => void }) {
   const DAYS = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'] as const
@@ -1813,7 +1813,7 @@ function AvailabilityModule({ user, lang, addToast }: { user: Employee; lang: La
   )
 }
 
-// ─── Shift Swap Module ─────────────────────────────────────────────────────────
+// --- Shift Swap Module ---------------------------------------------------------
 
 function ShiftSwapModule({ user, lang, addToast }: { user: Employee; lang: Lang; addToast: (type: Toast['type'], msg: string) => void }) {
   const [swaps, setSwaps] = useState<(ShiftSwap & { requester: Employee; target: Employee; shift: Shift; target_shift: Shift })[]>([])
@@ -1871,10 +1871,10 @@ function ShiftSwapModule({ user, lang, addToast }: { user: Employee; lang: Lang;
                 <tbody>
                   {swaps.map(swap => (
                     <tr key={swap.id}>
-                      <td>{swap.requester ? fullName(swap.requester) : '—'}</td>
-                      <td className="td-muted">{swap.shift ? `${fmtDate(swap.shift.start_time)} ${fmtTime(swap.shift.start_time)}` : '—'}</td>
-                      <td>{swap.target ? fullName(swap.target) : '—'}</td>
-                      <td className="td-muted">{swap.target_shift ? `${fmtDate(swap.target_shift.start_time)} ${fmtTime(swap.target_shift.start_time)}` : '—'}</td>
+                      <td>{swap.requester ? fullName(swap.requester) : ''--''}</td>
+                      <td className="td-muted">{swap.shift ? `${fmtDate(swap.shift.start_time)} ${fmtTime(swap.shift.start_time)}` : ''--''}</td>
+                      <td>{swap.target ? fullName(swap.target) : ''--''}</td>
+                      <td className="td-muted">{swap.target_shift ? `${fmtDate(swap.target_shift.start_time)} ${fmtTime(swap.target_shift.start_time)}` : ''--''}</td>
                       <td><span className={`badge badge-${swap.status === 'approved' ? 'success' : swap.status === 'denied' ? 'danger' : 'warning'}`}>{swap.status}</span></td>
                       <td>
                         {swap.status === 'pending' && (user.role === 'admin' || user.role === 'manager' || swap.target_id === user.id) && (
@@ -1939,7 +1939,7 @@ function SwapForm({ user, lang, myShifts, allShifts, employees, onSave, onClose,
           <label className="form-label">{t(lang, 'myShift')}</label>
           <select className="form-select" value={form.shift_id} onChange={e => setForm(f => ({ ...f, shift_id: e.target.value }))}>
             <option value="">Select your shift...</option>
-            {myShifts.map(s => <option key={s.id} value={s.id}>{fmtDate(s.start_time)} {fmtTime(s.start_time)} – {fmtTime(s.end_time)}</option>)}
+            {myShifts.map(s => <option key={s.id} value={s.id}>{fmtDate(s.start_time)} {fmtTime(s.start_time)} - {fmtTime(s.end_time)}</option>)}
           </select>
         </div>
         <div className="form-group">
@@ -1954,7 +1954,7 @@ function SwapForm({ user, lang, myShifts, allShifts, employees, onSave, onClose,
             <label className="form-label">Their Shift (optional)</label>
             <select className="form-select" value={form.target_shift_id} onChange={e => setForm(f => ({ ...f, target_shift_id: e.target.value }))}>
               <option value="">No specific shift</option>
-              {targetShifts.map(s => <option key={s.id} value={s.id}>{fmtDate(s.start_time)} {fmtTime(s.start_time)} – {fmtTime(s.end_time)}</option>)}
+              {targetShifts.map(s => <option key={s.id} value={s.id}>{fmtDate(s.start_time)} {fmtTime(s.start_time)} - {fmtTime(s.end_time)}</option>)}
             </select>
           </div>
         )}
@@ -1971,7 +1971,7 @@ function SwapForm({ user, lang, myShifts, allShifts, employees, onSave, onClose,
   )
 }
 
-// ─── Employees Module ─────────────────────────────────────────────────────────
+// --- Employees Module ---------------------------------------------------------
 
 function EmployeesModule({ user, lang, addToast }: { user: Employee; lang: Lang; addToast: (type: Toast['type'], msg: string) => void }) {
   const [employees, setEmployees] = useState<Employee[]>([])
@@ -2062,7 +2062,7 @@ function EmployeesModule({ user, lang, addToast }: { user: Employee; lang: Lang;
                         </div>
                       </div>
                     </td>
-                    <td className="td-muted">{emp.position || '—'}</td>
+                    <td className="td-muted">{emp.position || ''--''}</td>
                     <td>
                       {emp.department && (
                         <span className="badge" style={{ background: emp.department.color + '22', color: emp.department.color }}>{emp.department.name}</span>
@@ -2072,7 +2072,7 @@ function EmployeesModule({ user, lang, addToast }: { user: Employee; lang: Lang;
                     <td style={{ fontWeight: 500 }}>
                       {emp.employment_type === 'hourly' ? `$${emp.hourly_rate}/hr` : `$${emp.salary_annual.toLocaleString()}/yr`}
                     </td>
-                    <td className="td-muted">{emp.hire_date ? fmtDate(emp.hire_date) : '—'}</td>
+                    <td className="td-muted">{emp.hire_date ? fmtDate(emp.hire_date) : ''--''}</td>
                     <td>
                       <span className={`badge badge-${emp.status === 'active' ? 'success' : emp.status === 'terminated' ? 'danger' : 'warning'}`}>
                         {emp.status}
@@ -2204,7 +2204,7 @@ function EmployeeModal({ employee, departments, locations, lang, user, onClose, 
           {employee && <div className="avatar avatar-lg">{initials(employee)}</div>}
           <div>
             <h2 className="modal-title">{employee ? fullName(employee) : t(lang, 'newEmployee')}</h2>
-            {employee && <div className="text-sm text-muted2">{employee.position} · {employee.role}</div>}
+            {employee && <div className="text-sm text-muted2">{employee.position} . {employee.role}</div>}
           </div>
         </div>
         <button className="btn-ghost btn-icon" onClick={onClose}><Icon.X /></button>
@@ -2300,7 +2300,7 @@ function EmployeeModal({ employee, departments, locations, lang, user, onClose, 
                 <label className="form-label">{t(lang, 'language')}</label>
                 <select className="form-select" value={form.language} onChange={f('language')}>
                   <option value="en">English</option>
-                  <option value="es">Español</option>
+                  <option value="es">Espanol</option>
                 </select>
               </div>
               <div className="form-group">
@@ -2320,7 +2320,7 @@ function EmployeeModal({ employee, departments, locations, lang, user, onClose, 
             </div>
             <label className="checkbox-row">
               <input type="checkbox" checked={form.geo_exempt} onChange={e => setForm(p => ({ ...p, geo_exempt: e.target.checked }))} />
-              <span>{t(lang, 'geoExemptLabel')} — bypass geofencing for remote employees</span>
+              <span>{t(lang, 'geoExemptLabel')} '--' bypass geofencing for remote employees</span>
             </label>
           </>
         )}
@@ -2363,7 +2363,7 @@ function EmployeeModal({ employee, departments, locations, lang, user, onClose, 
             ) : payrollEntries.map(pe => (
               <div key={pe.id} style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 0', borderBottom: '1px solid var(--border)' }}>
                 <div>
-                  <div style={{ fontSize: 13, fontWeight: 500 }}>{pe.period ? `${pe.period.start_date} – ${pe.period.end_date}` : 'Unknown period'}</div>
+                  <div style={{ fontSize: 13, fontWeight: 500 }}>{pe.period ? `${pe.period.start_date} - ${pe.period.end_date}` : 'Unknown period'}</div>
                   <div className="text-xs text-muted2">{pe.regular_hours}h reg + {pe.overtime_hours}h OT</div>
                 </div>
                 <div style={{ textAlign: 'right' }}>
@@ -2421,7 +2421,7 @@ function TimeAttendanceTab({ employeeId, lang }: { employeeId: string; lang: Lan
           <div key={e.id} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid var(--border)', fontSize: 13 }}>
             <div>
               <span style={{ fontWeight: 500 }}>{fmtDate(e.clock_in)}</span>
-              <span className="td-muted"> · {fmtTime(e.clock_in)} → {e.clock_out ? fmtTime(e.clock_out) : 'Active'}</span>
+              <span className="td-muted"> . {fmtTime(e.clock_in)} -> {e.clock_out ? fmtTime(e.clock_out) : 'Active'}</span>
             </div>
             <div style={{ fontWeight: 600 }}>{getTotalHoursForEntry(e).toFixed(2)}h</div>
           </div>
@@ -2486,12 +2486,12 @@ function PerformanceTab({ employeeId, user, lang, addToast }: { employeeId: stri
               <span style={{ fontWeight: 600, fontSize: 13 }}>{p.period || 'Review'}</span>
               <div className="flex gap-2">
                 {Array.from({ length: 5 }).map((_, i) => (
-                  <span key={i} style={{ color: i < (p.rating || 0) ? 'var(--warning)' : 'var(--text4)', fontSize: 12 }}>★</span>
+                  <span key={i} style={{ color: i < (p.rating || 0) ? 'var(--warning)' : 'var(--text4)', fontSize: 12 }}>*</span>
                 ))}
               </div>
             </div>
-            {p.strengths && <div className="text-sm text-muted2 mb-4">✓ {p.strengths}</div>}
-            {p.improvements && <div className="text-sm text-muted2">△ {p.improvements}</div>}
+            {p.strengths && <div className="text-sm text-muted2 mb-4">v {p.strengths}</div>}
+            {p.improvements && <div className="text-sm text-muted2">^ {p.improvements}</div>}
           </div>
         ))
       }
@@ -2499,7 +2499,7 @@ function PerformanceTab({ employeeId, user, lang, addToast }: { employeeId: stri
   )
 }
 
-// ─── Payroll Module ───────────────────────────────────────────────────────────
+// --- Payroll Module -----------------------------------------------------------
 
 function PayrollModule({ user, lang, addToast }: { user: Employee; lang: Lang; addToast: (type: Toast['type'], msg: string) => void }) {
   const [periods, setPeriods] = useState<PayrollPeriod[]>([])
@@ -2649,7 +2649,7 @@ function PayrollModule({ user, lang, addToast }: { user: Employee; lang: Lang; a
                 transition: 'all 0.15s',
               }}
             >
-              <div style={{ fontSize: 13, fontWeight: 500 }}>{p.start_date} – {p.end_date}</div>
+              <div style={{ fontSize: 13, fontWeight: 500 }}>{p.start_date} - {p.end_date}</div>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 4 }}>
                 <span className="text-xs text-muted2">{p.frequency}</span>
                 <span className={`badge badge-${p.status === 'paid' ? 'success' : p.status === 'processing' ? 'warning' : 'muted'}`} style={{ fontSize: 10 }}>{p.status}</span>
@@ -2663,7 +2663,7 @@ function PayrollModule({ user, lang, addToast }: { user: Employee; lang: Lang; a
           {!activePeriod ? (
             <div className="card">
               <div className="empty-state">
-                <div className="empty-state-icon">💼</div>
+                <div className="empty-state-icon"></div>
                 <div className="empty-state-text">Select a pay period to view details</div>
               </div>
             </div>
@@ -2723,7 +2723,7 @@ function PayrollModule({ user, lang, addToast }: { user: Employee; lang: Lang; a
                               <div className="flex items-center gap-8">
                                 {entry.employee && <div className="avatar avatar-sm">{initials(entry.employee)}</div>}
                                 <div>
-                                  <div style={{ fontWeight: 500, fontSize: 13 }}>{entry.employee ? fullName(entry.employee) : '—'}</div>
+                                  <div style={{ fontWeight: 500, fontSize: 13 }}>{entry.employee ? fullName(entry.employee) : ''--''}</div>
                                   <div className="text-xs text-muted2">{entry.employee?.position}</div>
                                 </div>
                               </div>
@@ -2735,7 +2735,7 @@ function PayrollModule({ user, lang, addToast }: { user: Employee; lang: Lang; a
                             <td style={{ fontWeight: 700, color: 'var(--success)' }}>{formatCurrency(entry.net_pay)}</td>
                             <td>
                               {entry.bank_routing ? (
-                                <span className="badge badge-success">✓ {entry.bank_account_type}</span>
+                                <span className="badge badge-success">v {entry.bank_account_type}</span>
                               ) : (
                                 <span className="badge badge-danger">No bank</span>
                               )}
@@ -2840,7 +2840,7 @@ function PaystubModal({ entry, period, companyName, lang, onClose }: { entry: Pa
             </div>
             <div style={{ textAlign: 'right' }}>
               <div style={{ fontSize: 12 }}><strong>{t(lang, 'payDate')}:</strong> {period.pay_date}</div>
-              <div style={{ fontSize: 12 }}><strong>Period:</strong> {period.start_date} – {period.end_date}</div>
+              <div style={{ fontSize: 12 }}><strong>Period:</strong> {period.start_date} - {period.end_date}</div>
               <div style={{ fontSize: 12 }}><strong>Frequency:</strong> {period.frequency}</div>
             </div>
           </div>
@@ -2848,8 +2848,8 @@ function PaystubModal({ entry, period, companyName, lang, onClose }: { entry: Pa
           <div className="paystub-section">
             <div className="paystub-section-title">Employee</div>
             <div className="paystub-row"><span>{t(lang, 'employeeId')}</span><span>{entry.employee_id?.slice(0, 8).toUpperCase()}</span></div>
-            <div className="paystub-row"><span>Name</span><span>{entry.employee ? fullName(entry.employee) : '—'}</span></div>
-            <div className="paystub-row"><span>Position</span><span>{entry.employee?.position || '—'}</span></div>
+            <div className="paystub-row"><span>Name</span><span>{entry.employee ? fullName(entry.employee) : ''--''}</span></div>
+            <div className="paystub-row"><span>Position</span><span>{entry.employee?.position || ''--''}</span></div>
           </div>
 
           <div className="paystub-section">
@@ -2871,7 +2871,7 @@ function PaystubModal({ entry, period, companyName, lang, onClose }: { entry: Pa
 
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 8 }}>
             <div>
-              {entry.bank_name && <div style={{ fontSize: 12, color: '#64748B' }}>{t(lang, 'directDepositTo')}: {entry.bank_name} ····{entry.bank_account?.slice(-4)}</div>}
+              {entry.bank_name && <div style={{ fontSize: 12, color: '#64748B' }}>{t(lang, 'directDepositTo')}: {entry.bank_name} ....{entry.bank_account?.slice(-4)}</div>}
             </div>
             <div className="paystub-net">{t(lang, 'netPay')}: {formatCurrency(entry.net_pay)}</div>
           </div>
@@ -2881,7 +2881,7 @@ function PaystubModal({ entry, period, companyName, lang, onClose }: { entry: Pa
   )
 }
 
-// ─── Reports Module ───────────────────────────────────────────────────────────
+// --- Reports Module -----------------------------------------------------------
 
 function ReportsModule({ user, lang }: { user: Employee; lang: Lang }) {
   const [activeReport, setActiveReport] = useState<string | null>(null)
@@ -2905,7 +2905,7 @@ function ReportsModule({ user, lang }: { user: Employee; lang: Lang }) {
       const grouped: Record<string, { name: string; dept: string; hours: number; entries: number }> = {}
       for (const e of entries || []) {
         const emp = e.employee as unknown as Employee & { department: { name: string } }
-        if (!grouped[e.employee_id!]) grouped[e.employee_id!] = { name: emp ? fullName(emp) : '?', dept: emp?.department?.name || '—', hours: 0, entries: 0 }
+        if (!grouped[e.employee_id!]) grouped[e.employee_id!] = { name: emp ? fullName(emp) : '?', dept: emp?.department?.name || ''--'', hours: 0, entries: 0 }
         const h = Math.max(0, (differenceInMinutes(parseISO(e.clock_out!), parseISO(e.clock_in)) - (e.break_mins || 0)) / 60)
         grouped[e.employee_id!].hours += h
         grouped[e.employee_id!].entries += 1
@@ -2921,7 +2921,7 @@ function ReportsModule({ user, lang }: { user: Employee; lang: Lang }) {
       const grouped: Record<string, { name: string; dept: string; hours: number; cost: number }> = {}
       for (const e of entries || []) {
         const emp = e.employee as unknown as Employee & { department: { name: string } }
-        if (!grouped[e.employee_id!]) grouped[e.employee_id!] = { name: emp ? fullName(emp) : '?', dept: emp?.department?.name || '—', hours: 0, cost: 0 }
+        if (!grouped[e.employee_id!]) grouped[e.employee_id!] = { name: emp ? fullName(emp) : '?', dept: emp?.department?.name || ''--'', hours: 0, cost: 0 }
         const h = Math.max(0, (differenceInMinutes(parseISO(e.clock_out!), parseISO(e.clock_in)) - (e.break_mins || 0)) / 60)
         grouped[e.employee_id!].hours += h
         grouped[e.employee_id!].cost += emp?.employment_type === 'hourly' ? h * (emp?.hourly_rate || 0) : (emp?.salary_annual || 0) / 26
@@ -3067,7 +3067,7 @@ function ReportsModule({ user, lang }: { user: Employee; lang: Lang }) {
           {!activeReport && (
             <div className="card">
               <div className="empty-state">
-                <div className="empty-state-icon">📊</div>
+                <div className="empty-state-icon"></div>
                 <div className="empty-state-text">{t(lang, 'selectReport')}</div>
               </div>
             </div>
@@ -3078,7 +3078,7 @@ function ReportsModule({ user, lang }: { user: Employee; lang: Lang }) {
   )
 }
 
-// ─── Documents Module ─────────────────────────────────────────────────────────
+// --- Documents Module ---------------------------------------------------------
 
 function DocumentsModule({ user, lang, addToast }: { user: Employee; lang: Lang; addToast: (type: Toast['type'], msg: string) => void }) {
   const [documents, setDocuments] = useState<(Document & { employee: Employee })[]>([])
@@ -3171,9 +3171,9 @@ function DocumentsModule({ user, lang, addToast }: { user: Employee; lang: Lang;
                         <span style={{ fontWeight: 500 }}>{doc.name}</span>
                       </div>
                     </td>
-                    {user.role !== 'employee' && <td>{doc.employee ? fullName(doc.employee) : '—'}</td>}
+                    {user.role !== 'employee' && <td>{doc.employee ? fullName(doc.employee) : ''--''}</td>}
                     <td><span className="badge badge-muted">{doc.type}</span></td>
-                    <td>{doc.expiry_date ? fmtDate(doc.expiry_date) : <span className="td-muted">—</span>}</td>
+                    <td>{doc.expiry_date ? fmtDate(doc.expiry_date) : <span className="td-muted">'--'</span>}</td>
                     <td>{getExpirybadge(doc.expiry_date)}</td>
                     <td>
                       {doc.url && (
@@ -3278,7 +3278,7 @@ function UploadDocumentModal({ user, lang, employees, onClose, onSave, addToast 
   )
 }
 
-// ─── Notifications Module ─────────────────────────────────────────────────────
+// --- Notifications Module -----------------------------------------------------
 
 function NotificationsModule({ user, lang, addToast, onRead }: { user: Employee; lang: Lang; addToast: (type: Toast['type'], msg: string) => void; onRead: () => void }) {
   const [notifications, setNotifications] = useState<Notification[]>([])
@@ -3327,7 +3327,7 @@ function NotificationsModule({ user, lang, addToast, onRead }: { user: Employee;
         {loading ? <div className="loading-overlay"><span className="spinner" /></div> :
           notifications.length === 0 ? (
             <div className="empty-state">
-              <div className="empty-state-icon">🔔</div>
+              <div className="empty-state-icon"></div>
               <div className="empty-state-text">{t(lang, 'noNotifications')}</div>
             </div>
           ) : notifications.map(notif => (
@@ -3349,7 +3349,7 @@ function NotificationsModule({ user, lang, addToast, onRead }: { user: Employee;
   )
 }
 
-// ─── Hiring Module ────────────────────────────────────────────────────────────
+// --- Hiring Module ------------------------------------------------------------
 
 function HiringModule({ user, lang, addToast }: { user: Employee; lang: Lang; addToast: (type: Toast['type'], msg: string) => void }) {
   const [jobs, setJobs] = useState<JobPosting[]>([])
@@ -3444,9 +3444,9 @@ function HiringModule({ user, lang, addToast }: { user: Employee; lang: Lang; ad
                   return (
                     <tr key={job.id}>
                       <td style={{ fontWeight: 500 }}>{job.title}</td>
-                      <td>{(job as unknown as unknown as Record<string, unknown>).department ? <span className="badge badge-violet">{((job as unknown as unknown as Record<string, unknown>).department as { name: string }).name}</span> : '—'}</td>
+                      <td>{(job as unknown as unknown as Record<string, unknown>).department ? <span className="badge badge-violet">{((job as unknown as unknown as Record<string, unknown>).department as { name: string }).name}</span> : ''--''}</td>
                       <td className="td-muted">{job.employment_type}</td>
-                      <td className="td-muted">{job.location || '—'}</td>
+                      <td className="td-muted">{job.location || ''--''}</td>
                       <td>
                         <span className="badge badge-info">{cCount} candidates</span>
                       </td>
@@ -3494,7 +3494,7 @@ function HiringModule({ user, lang, addToast }: { user: Employee; lang: Lang; ad
                       {candidate.rating && (
                         <div style={{ marginTop: 4 }}>
                           {Array.from({ length: 5 }).map((_, i) => (
-                            <span key={i} style={{ color: i < candidate.rating! ? 'var(--warning)' : 'var(--text4)', fontSize: 11 }}>★</span>
+                            <span key={i} style={{ color: i < candidate.rating! ? 'var(--warning)' : 'var(--text4)', fontSize: 11 }}>*</span>
                           ))}
                         </div>
                       )}
@@ -3503,13 +3503,13 @@ function HiringModule({ user, lang, addToast }: { user: Employee; lang: Lang; ad
                         {STAGES.filter(s => s !== stage).map(s => (
                           <button key={s} className="btn btn-secondary btn-sm" style={{ fontSize: 10, padding: '2px 6px' }}
                             onClick={() => moveStage(candidate.id, s as string)}>
-                            → {t(lang, s as Parameters<typeof t>[1])}
+                            -> {t(lang, s as Parameters<typeof t>[1])}
                           </button>
                         ))}
                         {stage !== 'hired' && (
                           <button className="btn btn-success btn-sm" style={{ fontSize: 10, padding: '2px 6px' }}
                             onClick={() => convertToEmployee(candidate)}>
-                            ✓ Hire
+                            v Hire
                           </button>
                         )}
                       </div>
@@ -3668,7 +3668,7 @@ function NewCandidateModal({ lang, jobs, onClose, onSave, addToast }: { lang: La
   )
 }
 
-// ─── Messaging Module ─────────────────────────────────────────────────────────
+// --- Messaging Module ---------------------------------------------------------
 
 function MessagingModule({ user, lang }: { user: Employee; lang: Lang }) {
   const [employees, setEmployees] = useState<Employee[]>([])
@@ -3794,7 +3794,7 @@ function MessagingModule({ user, lang }: { user: Employee; lang: Lang }) {
         {!activeThread ? (
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg2)' }}>
             <div className="empty-state">
-              <div className="empty-state-icon">💬</div>
+              <div className="empty-state-icon"></div>
               <div className="empty-state-text">Select a conversation or search for someone</div>
             </div>
           </div>
@@ -3847,7 +3847,7 @@ function MessagingModule({ user, lang }: { user: Employee; lang: Lang }) {
   )
 }
 
-// ─── Locations Module ─────────────────────────────────────────────────────────
+// --- Locations Module ---------------------------------------------------------
 
 function LocationsModule({ user, lang, addToast }: { user: Employee; lang: Lang; addToast: (type: Toast['type'], msg: string) => void }) {
   const [locations, setLocations] = useState<Location[]>([])
@@ -3885,7 +3885,7 @@ function LocationsModule({ user, lang, addToast }: { user: Employee; lang: Lang;
           {locations.length === 0 && (
             <div className="card">
               <div className="empty-state">
-                <div className="empty-state-icon">📍</div>
+                <div className="empty-state-icon"></div>
                 <div className="empty-state-text">{t(lang, 'noLocations')}</div>
               </div>
             </div>
@@ -4021,7 +4021,7 @@ function LocationModal({ location, lang, onClose, onSave, addToast }: { location
   )
 }
 
-// ─── Settings Module ──────────────────────────────────────────────────────────
+// --- Settings Module ----------------------------------------------------------
 
 function SettingsModule({ user, lang, addToast, onThemeChange }: { user: Employee; lang: Lang; addToast: (type: Toast['type'], msg: string) => void; onThemeChange: () => void }) {
   const [tab, setTab] = useState('company')
@@ -4269,7 +4269,7 @@ function SettingsModule({ user, lang, addToast, onThemeChange }: { user: Employe
                             <span style={{ fontWeight: 500 }}>{fullName(emp)}</span>
                           </div>
                         </td>
-                        <td className="td-muted">{emp.email || '—'}</td>
+                        <td className="td-muted">{emp.email || ''--''}</td>
                         <td><span className={`badge badge-${emp.role === 'admin' ? 'violet' : emp.role === 'manager' ? 'info' : 'muted'}`}>{emp.role}</span></td>
                         <td><span className="badge badge-success">{emp.status}</span></td>
                       </tr>
@@ -4309,7 +4309,7 @@ function SettingsModule({ user, lang, addToast, onThemeChange }: { user: Employe
   )
 }
 
-// ─── App Shell ────────────────────────────────────────────────────────────────
+// --- App Shell ----------------------------------------------------------------
 
 function AppShell({ user, lang, setLang, activePage, setActivePage, unreadCount, loadUnread, onLogout, children }: {
   user: Employee
@@ -4358,7 +4358,7 @@ function AppShell({ user, lang, setLang, activePage, setActivePage, unreadCount,
   )
 }
 
-// ─── Root App ─────────────────────────────────────────────────────────────────
+// --- Root App -----------------------------------------------------------------
 
 export default function StaffForce() {
   const [user, setUser] = useState<Employee | null>(null)
@@ -4419,7 +4419,7 @@ export default function StaffForce() {
     return (
       <>
         <Head>
-          <title>StaffForce — Workforce Management</title>
+          <title>StaffForce '--' Workforce Management</title>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
         </Head>
         <LoginScreen onLogin={handleLogin} lang={lang} setLang={handleSetLang} />
@@ -4461,7 +4461,7 @@ export default function StaffForce() {
   return (
     <>
       <Head>
-        <title>StaffForce — Workforce Management</title>
+        <title>StaffForce '--' Workforce Management</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content="Complete workforce management platform" />
       </Head>
