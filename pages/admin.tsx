@@ -10,7 +10,6 @@ import AdminPayroll from '../components/admin/AdminPayroll'
 import AdminReports from '../components/admin/AdminReports'
 import AdminEmployees from '../components/admin/AdminEmployees'
 import { AdminAuditLog, AdminSettings } from '../components/admin/AdminMisc'
-import '../styles/admin.css'
 import type { Employee, Department, Location } from '../types'
 
 type Section = 'dashboard' | 'schedule' | 'timesheets' | 'payroll' | 'reports' | 'employees' | 'timeoff' | 'hiring' | 'locations' | 'settings' | 'audit'
@@ -225,7 +224,6 @@ export default function AdminPanel() {
 }
 
 // ── Inline stubs for Time Off, Hiring, Locations in admin ──
-import { Suspense } from 'react'
 
 function TimeOffAdmin({ user, employees, departments }: any) {
   const [requests, setRequests] = useState<any[]>([])
