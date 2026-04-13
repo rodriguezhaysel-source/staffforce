@@ -167,11 +167,11 @@ export default function AdminSchedule({ user, employees, departments, locations 
         </div>
       )}
 
-      {/* TIMELINE GRID — dark gray background */}
-      <div style={{ background: '#2A2F3A', borderRadius: 12, overflow: 'hidden', boxShadow: '0 4px 16px rgba(0,0,0,0.15)' }}>
+      {/* TIMELINE GRID */}
+      <div style={{ background: '#FFFFFF', borderRadius: 12, overflow: 'hidden', boxShadow: '0 1px 3px rgba(0,0,0,0.08)', border: '1px solid #E5E7EB' }}>
         {/* Day headers */}
-        <div style={{ display: 'flex', background: '#1E2330', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
-          <div style={{ width: 160, minWidth: 160, padding: '10px 14px', borderRight: '1px solid rgba(255,255,255,0.07)' }}>
+        <div style={{ display: 'flex', background: '#F9FAFB', borderBottom: '1px solid #E5E7EB' }}>
+          <div style={{ width: 160, minWidth: 160, padding: '10px 14px', borderRight: '1px solid #E5E7EB' }}>
             <div style={{ fontSize: 10, fontWeight: 700, color: '#4B5563', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
               {filteredEmps.length} staff
             </div>
@@ -179,23 +179,23 @@ export default function AdminSchedule({ user, employees, departments, locations 
           <div style={{ flex: 1, position: 'relative' }}>
             <div style={{ display: 'flex', height: '100%' }}>
               {days.map(d => (
-                <div key={d.toISOString()} style={{ flex: 1, padding: '10px 8px', textAlign: 'center', borderRight: '1px solid rgba(255,255,255,0.05)', background: isToday(d) ? 'rgba(37,99,235,0.1)' : 'transparent' }}>
-                  <div style={{ fontSize: 10, fontWeight: 700, color: isToday(d) ? '#60A5FA' : '#4B5563' }}>{format(d, 'EEE')}</div>
-                  <div style={{ fontSize: 18, fontWeight: 900, color: isToday(d) ? '#60A5FA' : '#9CA3AF' }}>{format(d, 'd')}</div>
+                <div key={d.toISOString()} style={{ flex: 1, padding: '10px 8px', textAlign: 'center', borderRight: '1px solid #F3F4F6', background: isToday(d) ? 'rgba(37,99,235,0.06)' : 'transparent' }}>
+                  <div style={{ fontSize: 10, fontWeight: 700, color: isToday(d) ? '#2563EB' : '#6B7280' }}>{format(d, 'EEE')}</div>
+                  <div style={{ fontSize: 18, fontWeight: 900, color: isToday(d) ? '#2563EB' : '#111827' }}>{format(d, 'd')}</div>
                 </div>
               ))}
             </div>
           </div>
-          <div style={{ width: 80, padding: '10px 8px', textAlign: 'center', borderLeft: '1px solid rgba(255,255,255,0.07)' }}>
+          <div style={{ width: 80, padding: '10px 8px', textAlign: 'center', borderLeft: '1px solid #E5E7EB' }}>
             <div style={{ fontSize: 10, fontWeight: 700, color: '#4B5563', textTransform: 'uppercase' }}>Wk Hrs</div>
           </div>
         </div>
 
         {/* Hour scale */}
         {view === 'day' && (
-          <div style={{ display: 'flex', background: '#181D28', borderBottom: '1px solid rgba(255,255,255,0.05)', paddingLeft: 160 }}>
+          <div style={{ display: 'flex', background: '#F3F4F6', borderBottom: '1px solid #E5E7EB', paddingLeft: 160 }}>
             {HOURS.slice(DAY_START, DAY_END).map(h => (
-              <div key={h} style={{ flex: 1, padding: '4px 2px', textAlign: 'center', fontSize: 9, fontWeight: 700, color: '#374151', fontFamily: 'IBM Plex Mono, monospace', borderRight: '1px solid rgba(255,255,255,0.03)' }}>
+              <div key={h} style={{ flex: 1, padding: '4px 2px', textAlign: 'center', fontSize: 9, fontWeight: 700, color: '#9CA3AF', fontFamily: 'IBM Plex Mono, monospace', borderRight: '1px solid #E5E7EB' }}>
                 {h === 0 ? '12a' : h < 12 ? h + 'a' : h === 12 ? '12p' : (h - 12) + 'p'}
               </div>
             ))}
@@ -211,11 +211,11 @@ export default function AdminSchedule({ user, employees, departments, locations 
             const isOT = weekHrs > 40
 
             return (
-              <div key={emp.id} style={{ display: 'flex', borderBottom: '1px solid rgba(255,255,255,0.04)', minHeight: 52, alignItems: 'stretch' }}>
+              <div key={emp.id} style={{ display: 'flex', borderBottom: '1px solid #F3F4F6', minHeight: 52, alignItems: 'stretch' }}>
                 {/* Employee label */}
-                <div style={{ width: 160, minWidth: 160, padding: '8px 14px', borderRight: '1px solid rgba(255,255,255,0.07)', background: '#1E2330', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                  <div style={{ fontWeight: 700, fontSize: 12, color: '#E5E7EB', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{emp.first_name} {emp.last_name?.[0]}.</div>
-                  <div style={{ fontSize: 10, color: '#4B5563', marginTop: 1 }}>{emp.position || dept?.name}</div>
+                <div style={{ width: 160, minWidth: 160, padding: '8px 14px', borderRight: '1px solid #E5E7EB', background: '#F9FAFB', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                  <div style={{ fontWeight: 700, fontSize: 12, color: '#111827', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{emp.first_name} {emp.last_name?.[0]}.</div>
+                  <div style={{ fontSize: 10, color: '#6B7280', marginTop: 1 }}>{emp.position || dept?.name}</div>
                 </div>
 
                 {/* Day cells */}
@@ -228,7 +228,7 @@ export default function AdminSchedule({ user, employees, departments, locations 
                     return (
                       <div
                         key={d.toISOString()}
-                        style={{ flex: 1, position: 'relative', borderRight: '1px solid rgba(255,255,255,0.04)', background: isTodayCol ? 'rgba(37,99,235,0.04)' : 'transparent', minHeight: 52, cursor: 'pointer' }}
+                        style={{ flex: 1, position: 'relative', borderRight: '1px solid #F3F4F6', background: isTodayCol ? 'rgba(37,99,235,0.04)' : 'transparent', minHeight: 52, cursor: 'pointer' }}
                         onClick={() => {
                           const ds = format(d, 'yyyy-MM-dd')
                           setForm(f => ({ ...f, employee_id: emp.id, department_id: emp.department_id || '', start_time: ds + 'T09:00', end_time: ds + 'T17:00', position: emp.position || '' }))
@@ -237,7 +237,7 @@ export default function AdminSchedule({ user, employees, departments, locations 
                       >
                         {/* Hour grid lines */}
                         {view === 'day' && HOURS.slice(DAY_START, DAY_END).map((h, idx) => (
-                          <div key={h} style={{ position: 'absolute', top: 0, bottom: 0, left: `${(idx / VISIBLE_HOURS) * 100}%`, width: 1, background: 'rgba(255,255,255,0.03)' }} />
+                          <div key={h} style={{ position: 'absolute', top: 0, bottom: 0, left: `${(idx / VISIBLE_HOURS) * 100}%`, width: 1, background: '#F3F4F6' }} />
                         ))}
 
                         {/* Now line — only on today column */}
@@ -283,7 +283,7 @@ export default function AdminSchedule({ user, employees, departments, locations 
                               )
                             })}
                             {dayShifts.length === 0 && (
-                              <div style={{ height: 36, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.08)', fontSize: 18 }}>+</div>
+                              <div style={{ height: 36, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#D1D5DB', fontSize: 18 }}>+</div>
                             )}
                           </div>
                         )}
@@ -293,8 +293,8 @@ export default function AdminSchedule({ user, employees, departments, locations 
                 </div>
 
                 {/* Week hours */}
-                <div style={{ width: 80, display: 'flex', alignItems: 'center', justifyContent: 'center', borderLeft: '1px solid rgba(255,255,255,0.07)', flexDirection: 'column', gap: 2 }}>
-                  <div style={{ fontSize: 13, fontWeight: 900, color: isOT ? '#FCA5A5' : '#9CA3AF', fontFamily: 'IBM Plex Mono, monospace' }}>{weekHrs.toFixed(1)}h</div>
+                <div style={{ width: 80, display: 'flex', alignItems: 'center', justifyContent: 'center', borderLeft: '1px solid #E5E7EB', flexDirection: 'column', gap: 2 }}>
+                  <div style={{ fontSize: 13, fontWeight: 900, color: isOT ? '#DC2626' : '#6B7280', fontFamily: 'IBM Plex Mono, monospace' }}>{weekHrs.toFixed(1)}h</div>
                   {isOT && <div style={{ fontSize: 9, fontWeight: 800, color: '#EF4444' }}>OT</div>}
                 </div>
               </div>
@@ -308,16 +308,16 @@ export default function AdminSchedule({ user, employees, departments, locations 
 
         {/* Open shifts footer */}
         {openShifts.filter(os => os.status === 'open').length > 0 && (
-          <div style={{ padding: '12px 16px', borderTop: '1px solid rgba(255,255,255,0.06)', background: '#1E2330' }}>
-            <div style={{ fontSize: 11, fontWeight: 700, color: '#4B5563', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 8 }}>Open Shifts — Unclaimed</div>
+          <div style={{ padding: '12px 16px', borderTop: '1px solid #E5E7EB', background: '#F9FAFB' }}>
+            <div style={{ fontSize: 11, fontWeight: 700, color: '#6B7280', textTransform: 'uppercase' as any, letterSpacing: '0.5px', marginBottom: 8 }}>Open Shifts — Unclaimed</div>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' as any }}>
               {openShifts.filter(os => os.status === 'open').map(os => {
                 const dept = departments.find(d => d.id === os.department_id)
                 const color = getPositionColor(os.position || '')
                 return (
-                  <div key={os.id} style={{ padding: '5px 12px', borderRadius: 6, background: color + '20', border: `1px solid ${color}40`, fontSize: 11, fontWeight: 700, color: '#E5E7EB' }}>
+                  <div key={os.id} style={{ padding: '5px 12px', borderRadius: 6, background: color + '20', border: `1px solid ${color}40`, fontSize: 11, fontWeight: 700, color: '#111827' }}>
                     {os.position || 'Open'} · {format(new Date(os.start_time), 'EEE HH:mm')}–{format(new Date(os.end_time), 'HH:mm')}
-                    {dept && <span style={{ color: '#6B7280', fontWeight: 400 }}> · {dept.name}</span>}
+                    {dept && <span style={{ color: '#9CA3AF', fontWeight: 400 }}> · {dept.name}</span>}
                   </div>
                 )
               })}
