@@ -18,7 +18,7 @@ export const C = {
   warning: '#D97706',
   warningBg: '#FEF3C7',
   warningBorder: '#FDE68A',
-  border: '#E2E8F0',
+  border: '#CBD5E1',
   text: '#0F172A',
   textSub: '#64748B',
   textMuted: '#94A3B8',
@@ -42,7 +42,7 @@ export function Avatar({ emp, size = 32, color }: { emp?: any; size?: number; co
 // ─── Card ──────────────────────────────────────────────────
 export function Card({ children, style = {}, pad = 20 }: { children: React.ReactNode; style?: React.CSSProperties; pad?: number }) {
   return (
-    <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 12, boxShadow: '0 1px 3px rgba(0,0,0,0.05)', padding: pad, ...style }}>
+    <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 12, boxShadow: '0 1px 4px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06)', padding: pad, ...style }}>
       {children}
     </div>
   )
