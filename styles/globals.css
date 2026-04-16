@@ -7,7 +7,7 @@
   --primary-hover: #095AA3;
   --sidebar: #0F1A2E;
   --sidebar-hover: #1a2e42;
-  --border: #E2E6EC;
+  --border: #CBD5E1;
   --text-main: #111827;
   --text-secondary: #6B7280;
   --text-muted: #9CA3AF;
@@ -24,8 +24,8 @@
   --sidebar-w: 230px;
   --topbar-h: 56px;
   --radius: 10px;
-  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --shadow: 0 1px 4px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.12);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0 }
