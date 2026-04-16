@@ -125,7 +125,7 @@ interface InpProps {
 }
 export function Inp({ label, type = 'text', value, onChange, placeholder = '', style = {}, rows = 0, disabled = false, required = false }: InpProps) {
   const inputStyle: React.CSSProperties = {
-    width: '100%', padding: '9px 12px', border: `1.5px solid ${C.border}`, borderRadius: 8,
+    width: '100%', padding: '9px 12px', border: '1.5px solid #94A3B8', borderRadius: 8,
     fontSize: 13, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box',
     color: C.text, background: disabled ? '#F8FAFC' : '#fff', ...style
   }
@@ -152,7 +152,7 @@ export function Sel({ label, value, onChange, children, style = {}, disabled = f
   return (
     <div style={{ marginBottom: 14 }}>
       {label && <label style={{ display: 'block', fontSize: 11, fontWeight: 700, color: C.textSub, textTransform: 'uppercase' as any, letterSpacing: '0.5px', marginBottom: 5 }}>{label}</label>}
-      <select value={value} onChange={onChange} disabled={disabled} style={{ width: '100%', padding: '9px 12px', border: `1.5px solid ${C.border}`, borderRadius: 8, fontSize: 13, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box' as any, color: C.text, background: '#fff', ...style }}>
+      <select value={value} onChange={onChange} disabled={disabled} style={{ width: '100%', padding: '9px 12px', border: '1.5px solid #94A3B8', borderRadius: 8, fontSize: 13, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box' as any, color: C.text, background: '#fff', ...style }}>
         {children}
       </select>
     </div>
